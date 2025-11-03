@@ -1,5 +1,6 @@
 import { Router } from "express";
 import type { CartItem } from "../types/index.d.js";
+import { products } from "./products.js";
 
 const router = Router();
 
@@ -33,6 +34,16 @@ router.post("/remove", (req, res) => {
 router.post("/clear", (req, res) => {
   (req.session as any).cart = [];
   res.json({ ok: true, cart: [] });
+});
+
+router.get("/total", (req, res) => {
+  const cart: CartItem[] = (req.session as any).cart || [];
+  const productMap = new Map(products.map(p => [p.id, p]));
+  const total = cart.reduce((sum, item) => {
+    const product = productMap.get(item.productId);
+    return sum + (product ? product.price * item.qty : 0);
+  }, 0);
+  res.json({ total, currency: "COP" });
 });
 
 export default router;
