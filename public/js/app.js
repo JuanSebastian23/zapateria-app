@@ -47,6 +47,12 @@ function renderProducts(products) {
         body: JSON.stringify({ productId, qty })
       });
       updateCartCount();
+      
+      // Mostrar notificación toast
+      const toast = new bootstrap.Toast(document.getElementById('addToCartToast'), {
+        delay: 3000 // El toast se ocultará después de 3 segundos
+      });
+      toast.show();
     });
   });
 }
