@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import { products } from "./products";
+import { products } from "./products.js";
 import "cookie-session";
 import type { CartItem } from "../types/index.d.js";
 
